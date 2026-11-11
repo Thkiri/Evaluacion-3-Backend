@@ -13,3 +13,12 @@ venv.bak/
 .env.local
 .env.*.local
 !.env_example
+
+# Documentación y agentes
+docs/
+AGENTS*
+agents/
+
+# Archivos multimedia subidos por usuarios
+media/
+

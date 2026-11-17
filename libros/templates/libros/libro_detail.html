@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ libro.titulo }} — BiblioTech{% endblock %}
+
+{% block content %}
+<div class="mb-3">
+    <a href="{% url 'libros:lista' %}" class="btn btn-outline-secondary btn-sm">&larr; Volver al catálogo</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="row g-0">
+        <div class="col-md-4 bg-light d-flex align-items-center justify-content-center p-3">
+            {% if libro.portada %}
+                <img src="{{ libro.portada.url }}" alt="Portada de {{ libro.titulo }}"
+                     class="img-fluid rounded" style="max-height: 400px; object-fit: cover;">
+            {% else %}
+                <div class="text-secondary text-center py-5">
+                    <span>Sin portada disponible</span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="badge bg-primary-subtle text-primary-emphasis">
+                        {{ libro.categoria.codigo }} — {{ libro.categoria.nombre }}
+                    </span>
+                    {% if libro.disponible %}
+                        <span class="badge bg-success">Disponible</span>
+                    {% else %}
+                        <span class="badge bg-secondary">No disponible</span>
+                    {% endif %}
+                </div>
+
+                <h1 class="h3 card-title mb-1">{{ libro.titulo }}</h1>
+                <p class="text-muted mb-4">por {{ libro.autor }}</p>
+
+                <dl class="row mb-4">
+                    <dt class="col-sm-4">ISBN</dt>
+                    <dd class="col-sm-8">{{ libro.isbn }}</dd>
+
+                    <dt class="col-sm-4">Stock disponible</dt>
+                    <dd class="col-sm-8">{{ libro.stock }} unidad(es)</dd>
+
+                    <dt class="col-sm-4">Precio de arriendo</dt>
+                    <dd class="col-sm-8">${{ libro.precio_arriendo }}</dd>
+
+                    <dt class="col-sm-4">Fecha de publicación</dt>
+                    <dd class="col-sm-8">{{ libro.fecha_publicacion|date:"d/m/Y" }}</dd>
+                </dl>
+
+                <div class="d-flex gap-2">
+                    <a href="{% url 'libros:editar' libro.pk %}" class="btn btn-primary">Editar libro</a>
+                    <a href="{% url 'libros:eliminar' libro.pk %}" class="btn btn-outline-danger">Eliminar libro</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

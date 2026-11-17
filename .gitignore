@@ -14,10 +14,9 @@ venv.bak/
 .env.*.local
 !.env_example
 
-# Documentación y agentes
+# Documentación
 docs/
-AGENTS*
-agents/
+
 
 # Archivos multimedia subidos por usuarios
 media/

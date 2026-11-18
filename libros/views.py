@@ -1,3 +1,6 @@
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -11,7 +14,7 @@ from .models import Libro
 
 
 class LibroListView(ListView):
-   
+
     model = Libro
     queryset = Libro.objects.select_related('categoria')
     template_name = 'libros/libro_list.html'
@@ -26,25 +29,31 @@ class LibroDetailView(DetailView):
     context_object_name = 'libro'
 
 
-class LibroCreateView(CreateView):
+class LibroCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     model = Libro
     form_class = LibroForm
     template_name = 'libros/libro_form.html'
     success_url = reverse_lazy('libros:lista')
+    success_message = "Libro creado correctamente."
 
 
-class LibroUpdateView(UpdateView):
+class LibroUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     model = Libro
     form_class = LibroForm
     template_name = 'libros/libro_form.html'
     success_url = reverse_lazy('libros:lista')
+    success_message = "Libro actualizado correctamente."
 
 
-class LibroDeleteView(DeleteView):
+class LibroDeleteView(LoginRequiredMixin, DeleteView):
 
     model = Libro
     template_name = 'libros/libro_confirm_delete.html'
     context_object_name = 'libro'
     success_url = reverse_lazy('libros:lista')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Libro eliminado correctamente.")
+        return super().form_valid(form)

@@ -24,3 +24,18 @@ Rol:
 Tarea: 
 Contexto:
 Formato:
+
+USE bibliotech_db;
+
+-- 1. Conteo de entidades padre (Mínimo requerido: >= 4)
+SELECT COUNT(*) AS total_padres FROM libros_categoria;
+
+-- 2. Conteo de entidades hijas (Mínimo requerido: >= 10)
+SELECT COUNT(*) AS total_hijos FROM libros_libro;
+
+-- 3. Integridad de la consulta relacional con INNER JOIN
+SELECT h.id, h.titulo, p.nombre AS clasificacion
+FROM libros_libro h
+INNER JOIN libros_categoria p ON h.categoria_id = p.id;
+
+los sql test listos que lata hacerlos despues

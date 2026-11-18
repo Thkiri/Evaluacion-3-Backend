@@ -49,10 +49,12 @@
                     <dd class="col-sm-8">{{ libro.fecha_publicacion|date:"d/m/Y" }}</dd>
                 </dl>
 
+                {% if user.is_authenticated %}
                 <div class="d-flex gap-2">
                     <a href="{% url 'libros:editar' libro.pk %}" class="btn btn-primary">Editar libro</a>
                     <a href="{% url 'libros:eliminar' libro.pk %}" class="btn btn-outline-danger">Eliminar libro</a>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

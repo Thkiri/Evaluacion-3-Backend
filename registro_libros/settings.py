@@ -10,10 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+_env_path = BASE_DIR / '.env'
+if _env_path.exists():
+    for _line in _env_path.read_text(encoding='utf-8').splitlines():
+        _line = _line.strip()
+        if _line and not _line.startswith('#') and '=' in _line:
+            _key, _val = _line.split('=', 1)
+            os.environ.setdefault(_key.strip(), _val.strip().strip('"').strip("'"))
 
 
 # Quick-start development settings - unsuitable for production
@@ -75,8 +85,15 @@ WSGI_APPLICATION = 'registro_libros.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('DB_NAME', 'bibliotech_db'),
+        'USER': os.environ.get('DB_USER', 'root'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+        },
     }
 }
 
@@ -128,3 +145,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Authentication
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'libros:lista'
+LOGOUT_REDIRECT_URL = 'libros:lista'

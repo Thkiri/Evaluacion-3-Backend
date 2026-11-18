@@ -1,0 +1,38 @@
+:root {
+    --bibliotech-primary: #1b365d;
+    --bibliotech-accent: #d97706;
+    --bibliotech-bg: #f8fafc;
+}
+
+body {
+    background-color: var(--bibliotech-bg);
+}
+
+.navbar-bibliotech {
+    background-color: var(--bibliotech-primary) !important;
+}
+
+.navbar-brand {
+    letter-spacing: 0.3px;
+}
+
+.card {
+    border: 1px solid rgba(27, 54, 93, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.5rem 1.25rem rgba(27, 54, 93, 0.12) !important;
+}
+
+.btn-primary {
+    background-color: var(--bibliotech-primary);
+    border-color: var(--bibliotech-primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #142947;
+    border-color: #142947;
+}

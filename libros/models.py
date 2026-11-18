@@ -1,10 +1,7 @@
 from django.db import models
 
 class Categoria(models.Model):
-    """
-    Modelo Padre (Clasificador): Categoria
-    Gestionado exclusivamente desde el panel de Django Admin.
-    """
+
     nombre = models.CharField(max_length=100, unique=True, verbose_name="Nombre")
     codigo = models.CharField(max_length=20, unique=True, verbose_name="Código")
     descripcion = models.TextField(blank=True, verbose_name="Descripción")
@@ -20,12 +17,7 @@ class Categoria(models.Model):
 
 
 class Libro(models.Model):
-    """
-    Modelo Hijo (Operativo): Libro
-    Posee ForeignKey hacia Categoria y al menos 4 tipos de campos:
-    texto (titulo, autor, isbn), numérico/decimal (stock, precio_arriendo),
-    fecha (fecha_publicacion) y booleano (disponible), más imagen (portada).
-    """
+
     categoria = models.ForeignKey(
         Categoria,
         on_delete=models.CASCADE,
